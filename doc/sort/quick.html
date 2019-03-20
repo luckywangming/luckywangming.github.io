@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>冒泡排序 · GitBook</title>
+        <title>快速排序 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,8 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="selection.html" />
     
-    
-    <link rel="prev" href="./" />
+    <link rel="prev" href="selection.html" />
     
 
     </head>
@@ -116,7 +114,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1" data-path="bubble.html">
+        <li class="chapter " data-level="1.2.1" data-path="bubble.html">
             
                 <a href="bubble.html">
             
@@ -142,7 +140,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3" data-path="quick.html">
+        <li class="chapter active" data-level="1.2.3" data-path="quick.html">
             
                 <a href="quick.html">
             
@@ -190,7 +188,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >冒泡排序</a>
+        <a href="../.." >快速排序</a>
     </h1>
 </div>
 
@@ -205,34 +203,45 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x5192;&#x6CE1;&#x6392;&#x5E8F;">&#x5192;&#x6CE1;&#x6392;&#x5E8F;</h1>
-<p><img src="../../images/bubblesort.gif" alt="&#x5192;&#x6CE1;&#x6392;&#x5E8F;"></p>
+                                <h1 id="&#x5FEB;&#x901F;&#x6392;&#x5E8F;">&#x5FEB;&#x901F;&#x6392;&#x5E8F;</h1>
+<p><img src="../../images/quick.gif" alt="&#x5FEB;&#x901F;&#x6392;&#x5E8F;"></p>
+<ul>
+<li>CANVAS&#x52A8;&#x56FE;&#x9884;&#x89C8; <a href="http://codding.cn/quickSort/" target="_blank">http://codding.cn/quickSort/</a> <a href="https://github.com/kingAnyWHere" target="_blank">@&#x6458;&#x661F;fy &#x7B97;&#x6CD5;&#x53EF;&#x89C6;&#x5316;er &#x63D0;&#x4F9B;</a></li>
+</ul>
 <pre><code>  /**
-  * &#x5192;&#x6CE1;&#x6392;&#x5E8F;
-  * @method bubbleSort
+  * &#x5FEB;&#x901F;&#x6392;&#x5E8F;
+  * @method quickSort
   * @for 
-  * @param {Array,Function} {&#x6570;&#x7EC4;,&#x63A7;&#x5236;&#x5347;&#x5E8F;&#x964D;&#x5E8F;(a,b) =&gt; a - b}
+  * @param @param {Array} {&#x6570;&#x7EC4;}
   * @return {Array} &#x6392;&#x5E8F;&#x7ED3;&#x679C;
   */
-  const bubbleSort = (arr, fn) =&gt; {
-    if(!arr)return &quot;&#x6570;&#x7EC4;&#x4E3A;&#x7A7A;&quot;
+  const quickSort = (arr) =&gt; {
+    if (!arr) return &quot;&#x6570;&#x7EC4;&#x4E3A;&#x7A7A;&quot;
     if (arr.length &lt;= 1) return arr
 
-    let count = 0
-    fn = fn || ((a, b) =&gt; a - b) //&#x9ED8;&#x8BA4;&#x5347;&#x5E8F;
+    let midIndex = Math.floor(arr.length / 2)
+    let midNum = arr.splice(midIndex, 1)[0];
+
+    let left = []
+    let right = []
     for (let i = 0; i &lt; arr.length; i++) {
-      for (let j = 0; j &lt; arr.length - 1 - i; j++) {
-        if (fn(arr[j], arr[j + 1]) &gt; 0) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
-          count++
-        }
-      }
-      if (count == 0) { //&#x5982;&#x679C;&#x4E3A;&#x6709;&#x5E8F;&#x5E8F;&#x5217;&#xFF0C;&#x8DF3;&#x51FA;&#x5FAA;&#x73AF;
-        break
+      if (arr[i] &lt;= midNum) {
+        left.push(arr[i])
+      } else {
+        right.push(arr[i])
       }
     }
-    return arr
+    return quickSort(left).concat([midNum], quickSort(right))
   }
+</code></pre><ul>
+<li>ES6&#x5199;&#x6CD5;</li>
+</ul>
+<pre><code>let qsort = fn =&gt; ([x, ...xn]) =&gt; x == null ? []
+  : [
+    ...qsort(fn)(xn.filter(a =&gt; fn(a, x))),
+    x,
+    ...qsort(fn)(xn.filter(a =&gt; !fn(a, x)))
+  ]
 </code></pre>
                                 
                                 </section>
@@ -260,14 +269,10 @@
 
             
                 
-                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 经典排序-js">
+                <a href="selection.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 选择排序">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="selection.html" class="navigation navigation-next " aria-label="Next page: 选择排序">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -276,7 +281,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"冒泡排序","level":"1.2.1","depth":2,"next":{"title":"选择排序","level":"1.2.2","depth":2,"path":"doc/sort/selection.md","ref":"doc/sort/selection.md","articles":[]},"previous":{"title":"经典排序-js","level":"1.2","depth":1,"path":"doc/sort/README.md","ref":"doc/sort/README.md","articles":[{"title":"冒泡排序","level":"1.2.1","depth":2,"path":"doc/sort/bubble.md","ref":"doc/sort/bubble.md","articles":[]},{"title":"选择排序","level":"1.2.2","depth":2,"path":"doc/sort/selection.md","ref":"doc/sort/selection.md","articles":[]},{"title":"快速排序","level":"1.2.3","depth":2,"path":"doc/sort/quick.md","ref":"doc/sort/quick.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"doc/sort/bubble.md","mtime":"2019-03-20T08:50:41.258Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-20T09:41:29.865Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"快速排序","level":"1.2.3","depth":2,"previous":{"title":"选择排序","level":"1.2.2","depth":2,"path":"doc/sort/selection.md","ref":"doc/sort/selection.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"doc/sort/quick.md","mtime":"2019-03-20T09:40:02.897Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-20T09:41:29.865Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
