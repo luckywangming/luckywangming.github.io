@@ -1,2 +1,2 @@
 # luckywangming.github.io
-个人github主页
+个人github主页。
